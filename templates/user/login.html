@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block styles %}
+    {{ super() }}
+    <style>
+        #reg_box {
+            width: 30%;
+            margin: 5% auto auto auto;
+        }
+
+        #code {
+            width: 65%;
+            display: inline-block;
+        }
+
+        #get_code {
+            float: right;
+            width: 25%;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    <div id="reg_box">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">密码登录</a>
+            </li>
+            <li role="presentation">
+                <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">验证码登录</a>
+            </li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="home">
+                <form class="form-horizontal" action="{{ url_for("user.login") }}?type=1" method="POST">
+                    <p class="text-danger">{{ msg }}</p>
+                    <div class="form-group">
+                        <label for="username" class="col-sm-2 control-label">用户名</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="username" placeholder="username"
+                                   name="username">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="col-sm-2 control-label">密码</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="password" placeholder="password"
+                                   name="password">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-default">登 录</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="profile">
+                <form class="form-horizontal" action="{{ url_for("user.login") }}?type=2" method="POST">
+                    <p class="text-danger" id="msg2">{{ msg }}</p>
+                    <div class="form-group">
+                        <label for="phone" class="col-sm-2 control-label">手机号码</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="phone" placeholder="phone"
+                                   name="phone">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="code" class="col-sm-2 control-label">验证码</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="code" placeholder="code"
+                                   name="code">
+                            <a class="btn btn-default" href="#" role="button" id="get_code">发送验证码</a>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-default">登 录</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    {{ super() }}
+    <script>
+        $("#get_code").click(function () {
+            $("#msg2").text("")
+            var phone = $("#phone").val();
+            if (phone.length === 11) {
+                $.get("{{ url_for('user.send_code') }}", {'phone': phone}, function (data) {
+                    console.log(data)
+                })
+            } else {
+                $("#msg2").text("手机号码格式错误")
+            }
+        })
+    </script>
+{% endblock %}
+{#
+
+#}

@@ -1,0 +1,10 @@
+{% extends "base_.html" %}
+{% block title %}
+    show users by goods
+{% endblock %}
+
+{% block middle %}
+    {% for goods in user.good_ref %}
+        <p>{{ goods.name }}</p>
+    {% endfor %}
+{% endblock %}

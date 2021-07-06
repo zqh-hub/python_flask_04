@@ -1,0 +1,13 @@
+{% extends "base_.html" %}
+{% block title %}
+    展示文章
+{% endblock %}
+{% block middle %}
+    {% for art in arts %}
+        <div>
+            <p>标题：{{ art.title }}</p>
+            <p>内容：{{ art.content }}</p>
+        </div>
+        <hr>
+    {% endfor %}
+{% endblock %}

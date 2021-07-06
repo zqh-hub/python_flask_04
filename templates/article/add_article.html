@@ -1,0 +1,21 @@
+{% extends "base_.html" %}
+
+{% block title %}
+    添加文章
+{% endblock %}
+{% block middle %}
+    <form action="{{ url_for("article.add_art") }}" method="POST">
+        <lable for="title">文章标题</lable>
+        <input type="text" id="title" name="art_title"><br>
+        <lable for="content">文章内容</lable>
+        <br>
+        <textarea name="content" id="content" cols="90" rows="20"></textarea><br>
+        <lable for="art_user">文章编辑者</lable>
+        <select name="art_user" id="art_user"><br>
+            {% for user in users %}
+                <option value="{{ user.id }}">{{ user.username }}</option>
+            {% endfor %}
+        </select><br>
+        <input type="submit" value="发表">
+    </form>
+{% endblock %}

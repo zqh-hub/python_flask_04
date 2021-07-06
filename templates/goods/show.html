@@ -1,0 +1,43 @@
+{% extends "base_.html" %}
+{% block title %}
+    goods show
+{% endblock %}
+
+{% block middle %}
+    <form action="">
+        <select name="user_id">
+            <option value="0">--选择用户--</option>
+            {% for user in users %}
+                <option value="{{ user.id }}">{{ user.username }}</option>
+            {% endfor %}
+        </select>
+    </form>
+    <table border="1" cellspacing="0">
+        <tr>
+            <th>序号</th>
+            <th>商品名称</th>
+            <th>商品价格</th>
+            <th>操作</th>
+        </tr>
+        {% for good in goods %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td><a href="{{ url_for("goods.find_user") }}?goods_id={{ good.id }}">{{ good.name }}</a></td>
+                <td>{{ good.price }}</td>
+                <td>
+                    <a href="javascript:;" class="go_buy" tag= {{ good.id }}>购买</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
+
+{% block my_script %}
+    <script>
+        $(".go_buy").click(function () {
+            var user_id = $("select[name='user_id']").val()
+            var tag = $(this).attr("tag");
+            location.href = "{{ url_for('goods.gbuy')}}?goods_id=" + tag + "&user_id=" + user_id
+        })
+    </script>
+{% endblock %}

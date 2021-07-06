@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block styles %}
+    {{ super() }}
+    <style>
+        #reg_box {
+            width: 30%;
+            margin: 5% auto auto auto;
+        }
+    </style>
+
+{% endblock %}
+{% block content %}
+    <div id="reg_box">
+        <form class="form-horizontal" method="post">
+            <p class="text-danger" id="msg">{{ msg }}</p>
+            <div class="form-group">
+                <label for="username" class="col-sm-2 control-label">用户名</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="username" placeholder="username" name="username">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="password" class="col-sm-2 control-label">密码</label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control" id="password" placeholder="password" name="password">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="re_password" class="col-sm-2 control-label">确认密码</label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control" id="re_password" placeholder="confirm password"
+                           name="re_password">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="phone" class="col-sm-2 control-label">手机号码</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="phone" placeholder="phone" name="phone">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email" class="col-sm-2 control-label">邮箱</label>
+                <div class="col-sm-10">
+                    <input type="email" class="form-control" id="email" placeholder="email" name="email">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-default" id="reg">注 册</button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+{% block scripts %}
+    {{ super() }}
+    <script>
+        $("#phone").blur(function () {
+            var phone = $(this).val();
+            console.log(phone)
+            if (phone.length === 11) {
+                $("#msg").text("")
+                $.ajax({
+                    type: "get",
+                    url: "{{ url_for("user.check_phone") }}",
+                    data: {"phone": phone},
+                    success: function (data) {
+                        if (data.code != 200) {
+                            $("#msg").text(data.msg)
+                        }
+                    }
+                })
+            } else {
+                $("#msg").text("手机号码格式不正确")
+            }
+        })
+    </script>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends "base_.html" %}
+{% block title %}
+    show users by goods
+{% endblock %}
+
+{% block middle %}
+    {% for user in goods.user %}
+        <p><a href="{{ url_for("goods.find_goods") }}?user_id={{ user.id }}">{{ user.username }}</a></p>
+    {% endfor %}
+{% endblock %}

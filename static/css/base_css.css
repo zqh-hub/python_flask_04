@@ -1,0 +1,18 @@
+#nav {
+    height: 50px;
+    background-color: darkseagreen;
+}
+
+#header {
+    height: 80px;
+    background-color: cadetblue;
+}
+
+#footer {
+    height: 80px;
+    background-color: cadetblue;
+}
+
+#middle{
+    height: 500px;
+}
